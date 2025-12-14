@@ -12,6 +12,7 @@ from config import data_config
 from utils.helpers import get_model, draw_bbox_gaze
 
 from uniface import RetinaFace
+from uniface.constants import RetinaFaceWeights
 
 warnings.filterwarnings("ignore")
 logging.basicConfig(level=logging.INFO, format='%(message)s')
@@ -64,7 +65,8 @@ def main(params):
 
     idx_tensor = torch.arange(params.bins, device=device, dtype=torch.float32)
 
-    face_detector = RetinaFace()  # third-party face detection library
+    # face_detector = RetinaFace("retinaface_mnet_v2")  # third-party face detection library
+    face_detector = RetinaFace(model_name=RetinaFaceWeights.MNET_V2)
 
     try:
         gaze_detector = get_model(params.model, params.bins, inference_mode=True)
