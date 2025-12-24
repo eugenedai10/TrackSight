@@ -147,8 +147,16 @@ class FaceTracker:
 
 
 def main(params):
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    logging.info(f"Using device: {device}")
+    # Enhanced device detection for Apple M2 GPU support
+    if torch.backends.mps.is_available():
+        device = torch.device("mps")
+        logging.info("Using Apple M2 GPU (MPS) for acceleration")
+    elif torch.cuda.is_available():
+        device = torch.device("cuda")
+        logging.info("Using CUDA GPU for acceleration")
+    else:
+        device = torch.device("cpu")
+        logging.info("Using CPU for inference")
 
     idx_tensor = torch.arange(params.bins, device=device, dtype=torch.float32)
 

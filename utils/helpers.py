@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+import time
+import math
 
 import torch
 import torch.nn as nn
@@ -7,6 +9,47 @@ from torch.utils.data import DataLoader
 from torchvision import transforms
 
 from utils.datasets import Gaze360, MPIIGaze
+
+
+class GazeSmoother:
+    """Exponential Moving Average smoother for gaze angles."""
+    
+    def __init__(self, smoothing_time=0.5):
+        self.smoothing_time = smoothing_time
+        self.pitch = None
+        self.yaw = None
+        self.last_update_time = None
+    
+    def update(self, pitch, yaw, current_time):
+        """Update smoothed gaze angles using EMA."""
+        if self.pitch is None or self.yaw is None:
+            # First update - initialize with current values
+            self.pitch = pitch
+            self.yaw = yaw
+            self.last_update_time = current_time
+            return self.pitch, self.yaw
+        
+        # Calculate time delta
+        dt = current_time - self.last_update_time
+        if dt <= 0:
+            dt = 1/30.0  # Assume 30 FPS if no time difference
+        
+        # Calculate EMA alpha factor
+        alpha = 1 - math.exp(-dt / self.smoothing_time)
+        alpha = max(0.0, min(1.0, alpha))  # Clamp between 0 and 1
+        
+        # Apply EMA smoothing
+        self.pitch = alpha * pitch + (1 - alpha) * self.pitch
+        self.yaw = alpha * yaw + (1 - alpha) * self.yaw
+        
+        self.last_update_time = current_time
+        return self.pitch, self.yaw
+    
+    def reset(self):
+        """Reset the smoother state."""
+        self.pitch = None
+        self.yaw = None
+        self.last_update_time = None
 
 from models import (
     resnet18,
