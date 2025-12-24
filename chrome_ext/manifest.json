@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Closest Links Highlighter",
+  "version": "1.0.0",
+  "description": "Highlights the 3 closest links to your mouse pointer",
+  "permissions": [
+    "activeTab",
+    "nativeMessaging",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "commands": {
+    "toggle-highlight": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "Command+Shift+L"
+      },
+      "description": "Toggle closest links highlighting"
+    }
+  }
+}

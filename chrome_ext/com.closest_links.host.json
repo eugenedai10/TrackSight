@@ -1,0 +1,9 @@
+{
+  "name": "com.closest_links.host",
+  "description": "Native messaging host for Closest Links Highlighter extension",
+  "path": "/Users/kendai/workspaces/mouse_links/native_host.py",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://EXTENSION_ID_PLACEHOLDER/"
+  ]
+}

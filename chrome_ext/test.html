@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page - Closest Links Highlighter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .instruction {
+            background: #f0f0f0;
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .link-box {
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .link-box a {
+            display: block;
+            color: #2196F3;
+            text-decoration: none;
+            padding: 10px;
+            transition: background 0.3s;
+        }
+        .link-box a:hover {
+            background: #e3f2fd;
+            border-radius: 4px;
+        }
+        .scattered-links {
+            position: relative;
+            height: 600px;
+            background: #fafafa;
+            border: 2px dashed #ccc;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        .scattered-links a {
+            position: absolute;
+            padding: 10px 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .scattered-links a:hover {
+            background: #f5f5f5;
+        }
+        .content-section {
+            margin: 40px 0;
+        }
+        .inline-text a {
+            color: #1976D2;
+            text-decoration: none;
+            border-bottom: 1px dotted #1976D2;
+        }
+        .inline-text a:hover {
+            border-bottom-style: solid;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 Closest Links Highlighter - Test Page</h1>
+    
+    <div class="instruction">
+        <strong>Instructions:</strong>
+        <ol>
+            <li>Install the Chrome extension (see README.md)</li>
+            <li>Press <code>Ctrl+Shift+L</code> (or <code>Cmd+Shift+L</code> on Mac) to activate</li>
+            <li>Move your mouse around the page</li>
+            <li>Watch as the 3 closest links get highlighted in <span style="color: red;">red</span>, <span style="color: green;">green</span>, and <span style="color: blue;">blue</span></li>
+            <li>Notice how colors persist when links remain in the top 3</li>
+            <li>Press the keyboard shortcut again to deactivate</li>
+        </ol>
+    </div>
+
+    <div class="content-section">
+        <h2>Grid Layout Links</h2>
+        <p>Move your mouse over this grid to see how the extension highlights the closest links:</p>
+        <div class="link-grid">
+            <div class="link-box"><a href="#link1">Link 1</a></div>
+            <div class="link-box"><a href="#link2">Link 2</a></div>
+            <div class="link-box"><a href="#link3">Link 3</a></div>
+            <div class="link-box"><a href="#link4">Link 4</a></div>
+            <div class="link-box"><a href="#link5">Link 5</a></div>
+            <div class="link-box"><a href="#link6">Link 6</a></div>
+            <div class="link-box"><a href="#link7">Link 7</a></div>
+            <div class="link-box"><a href="#link8">Link 8</a></div>
+            <div class="link-box"><a href="#link9">Link 9</a></div>
+            <div class="link-box"><a href="#link10">Link 10</a></div>
+            <div class="link-box"><a href="#link11">Link 11</a></div>
+            <div class="link-box"><a href="#link12">Link 12</a></div>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <h2>Scattered Links</h2>
+        <p>Links randomly positioned - great for testing distance calculation:</p>
+        <div class="scattered-links">
+            <a href="#top-left" style="top: 20px; left: 20px;">Top Left</a>
+            <a href="#top-right" style="top: 20px; right: 20px;">Top Right</a>
+            <a href="#center" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Center</a>
+            <a href="#bottom-left" style="bottom: 20px; left: 20px;">Bottom Left</a>
+            <a href="#bottom-right" style="bottom: 20px; right: 20px;">Bottom Right</a>
+            <a href="#mid-left" style="top: 50%; left: 20px; transform: translateY(-50%);">Mid Left</a>
+            <a href="#mid-right" style="top: 50%; right: 20px; transform: translateY(-50%);">Mid Right</a>
+            <a href="#top-center" style="top: 20px; left: 50%; transform: translateX(-50%);">Top Center</a>
+            <a href="#bottom-center" style="bottom: 20px; left: 50%; transform: translateX(-50%);">Bottom Center</a>
+            <a href="#q1" style="top: 25%; left: 25%;">Quadrant 1</a>
+            <a href="#q2" style="top: 25%; right: 25%;">Quadrant 2</a>
+            <a href="#q3" style="bottom: 25%; left: 25%;">Quadrant 3</a>
+            <a href="#q4" style="bottom: 25%; right: 25%;">Quadrant 4</a>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <h2>Inline Links</h2>
+        <div class="inline-text">
+            <p>
+                This is a paragraph with several <a href="#inline1">inline links</a> scattered throughout the text. 
+                You can test how the extension works with <a href="#inline2">text-based links</a> that are part of 
+                regular content. Move your mouse <a href="#inline3">near these links</a> to see them highlighted. 
+                The extension should work seamlessly with <a href="#inline4">different types</a> of link layouts.
+            </p>
+            <p>
+                Here's another paragraph with more <a href="#inline5">inline links</a> for testing. The 
+                <a href="#inline6">color persistence</a> feature should work well here too. Notice how 
+                <a href="#inline7">links maintain</a> their colors as you move around. Try moving your mouse 
+                <a href="#inline8">between different</a> areas to see the <a href="#inline9">smooth transitions</a>.
+            </p>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <h2>Long Page Test</h2>
+        <p>Scroll down to test the extension with links throughout a long page:</p>
+        <div style="margin: 40px 0;">
+            <p><a href="#section1">Section 1 Link</a> - Far from other links</p>
+            <p style="margin-top: 100px;"><a href="#section2">Section 2 Link</a> - Spaced out</p>
+            <p style="margin-top: 100px;"><a href="#section3">Section 3 Link</a> - More spacing</p>
+            <p style="margin-top: 100px;"><a href="#section4">Section 4 Link</a> - Testing scrolling</p>
+            <p style="margin-top: 100px;"><a href="#section5">Section 5 Link</a> - Viewport awareness</p>
+            <p style="margin-top: 100px;"><a href="#section6">Section 6 Link</a> - Final test link</p>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <h2>Navigation Links</h2>
+        <nav style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 30px 0;">
+            <a href="#home" style="padding: 10px 20px; background: #2196F3; color: white; text-decoration: none; border-radius: 4px;">Home</a>
+            <a href="#about" style="padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 4px;">About</a>
+            <a href="#services" style="padding: 10px 20px; background: #FF9800; color: white; text-decoration: none; border-radius: 4px;">Services</a>
+            <a href="#contact" style="padding: 10px 20px; background: #F44336; color: white; text-decoration: none; border-radius: 4px;">Contact</a>
+            <a href="#portfolio" style="padding: 10px 20px; background: #9C27B0; color: white; text-decoration: none; border-radius: 4px;">Portfolio</a>
+        </nav>
+    </div>
+
+    <footer style="margin-top: 60px; padding: 20px; background: #f5f5f5; text-align: center; border-radius: 8px;">
+        <p>Test page for <strong>Closest Links Highlighter</strong> Chrome Extension</p>
+        <p style="margin-top: 10px;">
+            <a href="#footer1">Footer Link 1</a> | 
+            <a href="#footer2">Footer Link 2</a> | 
+            <a href="#footer3">Footer Link 3</a> | 
+            <a href="#footer4">Footer Link 4</a>
+        </p>
+    </footer>
+</body>
+</html>
