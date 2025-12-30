@@ -553,6 +553,8 @@ def main():
                        help="Mouse smoothing window size (SMA, default: 3)")
     parser.add_argument("--min-movement", type=int, default=30,
                        help="Dead zone radius in pixels (default: 30)")
+    parser.add_argument("--uart-port", type=str, default="/dev/tty.usbmodem21201",
+                       help="UART port for device communication (default: /dev/tty.usbmodem21201)")
     args = parser.parse_args()
     
     # Auto-detect calibration file if not specified
@@ -589,7 +591,8 @@ def main():
     
     try:
         app = SimpleGazeApp(args.camera, debug_mode, timeout_minutes, 
-                          window_size, min_movement, 
+                          window_size, min_movement,
+                          uart_port=args.uart_port,
                           calibration_file=calibration_file)
         app.run()
     except Exception as e:
