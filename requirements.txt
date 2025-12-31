@@ -1,4 +1,4 @@
-numpy==1.24.1
+numpy==1.26.1
 onnxruntime==1.19.0
 opencv-python==4.10.0.84
 pillow==10.2.0
